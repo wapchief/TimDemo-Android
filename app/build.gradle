@@ -1,0 +1,49 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion '25.0.0'
+    defaultConfig {
+        applicationId "com.wapchief.timdemo"
+        minSdkVersion 17
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    useLibrary 'org.apache.http.legacy'
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:23+'
+    compile 'com.android.support:support-v4:23+'
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    //绑定资源库
+    compile 'com.jakewharton:butterknife:8.7.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
+    //tab
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.0.0@aar'
+    //图片加载Picasso
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    //工具类集合
+    compile 'com.blankj:utilcode:1.9.0'
+    //列表+适配器
+    compile 'com.android.support:recyclerview-v7:23+'
+    compile 'com.zhy:base-rvadapter:3.0.3'
+    compile files('libs/bugly_2.4.0_imsdk_release.jar')
+    compile files('libs/MiPush_SDK_Client_3_5_0.jar')
+    //下拉刷新库
+    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
+    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'
+    compile files('libs/imsdk_ugc_ext.jar')
+    compile files('/Users/apple/Documents/工作文档/成功之道/开发工具相关/IM_Android_SDK_3.1.1/libs/imsdk_group_ext.jar')
+}
