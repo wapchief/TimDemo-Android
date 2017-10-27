@@ -97,7 +97,7 @@ public class FriendsFragment extends Fragment {
                     mBean = new TIMConverstionBean();
                     //解析性别
                     String gender = "[未知]";
-                    switch (timUserProfiles.get(i).getGender()){
+                    switch (timUserProfiles.get(i).getGender()) {
                         case Male:
                             gender = "[男]";
                             break;
@@ -110,18 +110,18 @@ public class FriendsFragment extends Fragment {
                     }
                     //先获取备注，然后昵称，最后ID
                     if (!StringUtils.isEmpty(timUserProfiles.get(i).getRemark())) {
-                        mBean.userName = gender+timUserProfiles.get(i).getRemark();
-                    }else if (!StringUtils.isEmpty(timUserProfiles.get(i).getNickName())){
-                        mBean.userName = gender+timUserProfiles.get(i).getNickName();
-                    }else {
-                        mBean.userName = gender+timUserProfiles.get(i).getIdentifier();
+                        mBean.userName = gender + timUserProfiles.get(i).getRemark();
+                    } else if (!StringUtils.isEmpty(timUserProfiles.get(i).getNickName())) {
+                        mBean.userName = gender + timUserProfiles.get(i).getNickName();
+                    } else {
+                        mBean.userName = gender + timUserProfiles.get(i).getIdentifier();
                     }
                     mBean.title = timUserProfiles.get(i).getNickName();
                     mBean.img = timUserProfiles.get(i).getFaceUrl();
                     //签名
-                    if (StringUtils.isEmpty(timUserProfiles.get(i).getSelfSignature())){
+                    if (StringUtils.isEmpty(timUserProfiles.get(i).getSelfSignature())) {
                         mBean.content = "这个人太懒了，还没有签名~";
-                    }else {
+                    } else {
                         mBean.content = timUserProfiles.get(i).getSelfSignature();
                     }
                     mBeans.add(mBean);
