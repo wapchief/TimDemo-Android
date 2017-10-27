@@ -45,5 +45,4 @@ dependencies {
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
     compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'
     compile files('libs/imsdk_ugc_ext.jar')
-    compile files('/Users/apple/Documents/工作文档/成功之道/开发工具相关/IM_Android_SDK_3.1.1/libs/imsdk_group_ext.jar')
 }
