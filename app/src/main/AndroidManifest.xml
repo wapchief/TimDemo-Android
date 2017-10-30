@@ -45,6 +45,10 @@
             android:windowSoftInputMode="adjustNothing"/>
         <activity android:name=".ui.ChatActivity"/>
         <activity android:name=".ui.activity.ChatGroupActivity"/>
+        <activity android:name=".ui.activity.UserDataActivity"/>
+        <activity android:name=".ui.activity.ImagePreviewActivity"/>
+
+
         <!-- 消息收发service -->
         <service
             android:name="com.tencent.qalsdk.service.QalService"

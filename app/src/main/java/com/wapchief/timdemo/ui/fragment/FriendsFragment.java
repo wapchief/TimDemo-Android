@@ -77,7 +77,7 @@ public class FriendsFragment extends Fragment {
     private void initAdapter() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mFriendsRv.setLayoutManager(layoutManager);
-        mAdapter = new ConversionListAdapter(getActivity(), R.layout.item_main_message, mBeans);
+        mAdapter = new ConversionListAdapter(getActivity(), R.layout.item_main_message, mBeans,1);
         mFriendsRv.setAdapter(mAdapter);
     }
 
@@ -124,6 +124,7 @@ public class FriendsFragment extends Fragment {
                     } else {
                         mBean.content = timUserProfiles.get(i).getSelfSignature();
                     }
+                    mBean.type = 1;
                     mBeans.add(mBean);
 //                    mBean.content = timUserProfiles.get(i).getGender().getValue();
                 }

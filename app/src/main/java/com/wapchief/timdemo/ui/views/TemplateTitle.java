@@ -44,7 +44,7 @@ public class TemplateTitle extends RelativeLayout {
     }
 
     private void setUpView(){
-        TextView tvTitle = (TextView) findViewById(R.id.title);
+        TextView tvTitle = (TextView) findViewById(R.id.title_tv);
         tvTitle.setText(titleText);
         LinearLayout backBtn = (LinearLayout) findViewById(R.id.title_back);
         backBtn.setVisibility(canBack ? VISIBLE : INVISIBLE);
@@ -74,7 +74,7 @@ public class TemplateTitle extends RelativeLayout {
      */
     public void setTitleText(String titleText){
         this.titleText = titleText;
-        TextView tvTitle = (TextView) findViewById(R.id.title);
+        TextView tvTitle = (TextView) findViewById(R.id.title_tv);
         tvTitle.setText(titleText);
     }
 

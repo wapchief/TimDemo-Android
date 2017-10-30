@@ -10,7 +10,8 @@
         android:id="@+id/chat_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"/>
+        android:layout_alignParentTop="true"
+        app:canBack="true"/>
     <com.wapchief.timdemo.ui.views.ChatInput
         android:id="@+id/input_panel"
         android:layout_width="match_parent"

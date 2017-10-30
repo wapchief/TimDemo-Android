@@ -1,6 +1,5 @@
 package com.wapchief.timdemo.ui.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +12,7 @@ import com.tencent.imsdk.TIMManager;
 import com.wapchief.timdemo.MainActivity;
 import com.wapchief.timdemo.R;
 import com.wapchief.timdemo.framework.BaseActivity;
+import com.wapchief.timdemo.framework.BaseApplication;
 import com.wapchief.timdemo.framework.sp.SharedPrefHelper;
 import com.wapchief.timdemo.service.TLSService;
 
@@ -54,15 +54,15 @@ public class LoginActivity extends BaseActivity{
 
     @Override
     protected void initView() {
-        initTLSSdk(getApplicationContext());
+        initTLSSdk();
         /*注册初始化*/
         mAccountHelper = TLSAccountHelper.getInstance()
                 .init(getApplicationContext(), SDKAPPID, accType, appVer);
-        mLoginHelper = TLSLoginHelper.getInstance().init(getApplicationContext(), SDKAPPID, accType, appVer);
+//        mLoginHelper = TLSLoginHelper.getInstance().init(getApplicationContext(), SDKAPPID, accType, appVer);
         initLogin();
         initTIMLogin(mPrefHelper.getUserName(),mPrefHelper.getToken());
 //        initAccount();
-        Log.e(TAG, "Version:\n" + mLoginHelper.getSDKVersion()+"\n"+mAccountHelper.getSDKVersion());
+//        Log.e(TAG, "Version:\n" + mLoginHelper.getSDKVersion()+"\n"+mAccountHelper.getSDKVersion());
     }
 
     private void initTIMLogin(String id,String sig) {
@@ -165,21 +165,27 @@ public class LoginActivity extends BaseActivity{
         @Override
         public void OnPwdLoginReaskImgcodeSuccess(byte[] bytes) {
             Log.e(TAG,"需要验证码");
+            dismissProgressDialog();
         }
+
 
         @Override
         public void OnPwdLoginNeedImgcode(byte[] bytes, TLSErrInfo tlsErrInfo) {
+            dismissProgressDialog();
             Log.e(TAG,"需要验证码");
         }
 
         @Override
         public void OnPwdLoginFail(TLSErrInfo tlsErrInfo) {
+            dismissProgressDialog();
             ToastUtils.showShort(tlsErrInfo.Msg);
         }
 
         @Override
         public void OnPwdLoginTimeout(TLSErrInfo tlsErrInfo) {
+            dismissProgressDialog();
             Log.e(TAG, tlsErrInfo.Msg+"\n"+tlsErrInfo.ErrCode);
+            ToastUtils.showShort(tlsErrInfo.Msg);
         }
     };
 
@@ -222,12 +228,15 @@ public class LoginActivity extends BaseActivity{
     };
 
 
-    /*初始化tls*/
-    public void initTLSSdk(Context context) {
-        mLoginHelper = TLSLoginHelper.getInstance().init(context.getApplicationContext(), SDKAPPID, accType, appVer);
+    /**
+     * 初始化TLS
+     * 注意为避免登录超时，需要将useSSO设置为true
+     */
+    public void initTLSSdk() {
+        mLoginHelper = TLSLoginHelper.getInstance().init(BaseApplication.baseApplication, SDKAPPID, accType, appVer);
         mLoginHelper.setTimeOut(3000);
         mLoginHelper.setLocalId(2052);
-        mLoginHelper.setTestHost("",false);
+        mLoginHelper.setTestHost("",true);
     }
 
 

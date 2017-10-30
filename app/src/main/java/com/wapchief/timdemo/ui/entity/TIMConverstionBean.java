@@ -25,6 +25,7 @@ public class TIMConverstionBean implements Serializable{
     public TIMConversation mConversation;
     public TIMConversationType conType;
     public int MsgType;
+    public long sum;
 
     @Override
     public String toString() {
@@ -42,6 +43,7 @@ public class TIMConverstionBean implements Serializable{
                 ", mConversation=" + mConversation +
                 ", conType=" + conType +
                 ", MsgType=" + MsgType +
+                ", sum=" + sum +
                 '}';
     }
 }
