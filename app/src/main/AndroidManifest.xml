@@ -30,7 +30,15 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.wapchief.timdemo.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
         <meta-data android:name="com.tencent.rdm.uuid" android:value="bf04fe1e-8175-417e-ac3f-6e34f23998a9" />
 
         <activity android:name=".ui.activity.SplashActivity">
@@ -47,7 +55,7 @@
         <activity android:name=".ui.activity.ChatGroupActivity"/>
         <activity android:name=".ui.activity.UserDataActivity"/>
         <activity android:name=".ui.activity.ImagePreviewActivity"/>
-
+        <activity android:name=".ui.activity.UserEditActivity"/>
 
         <!-- 消息收发service -->
         <service

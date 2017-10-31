@@ -9,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.tencent.imsdk.TIMCallBack;
 import com.tencent.imsdk.TIMFriendshipManager;
 import com.tencent.imsdk.TIMManager;
@@ -19,6 +21,8 @@ import com.tencent.imsdk.TIMValueCallBack;
 import com.wapchief.timdemo.R;
 import com.wapchief.timdemo.framework.sp.SharedPrefHelper;
 import com.wapchief.timdemo.ui.activity.LoginActivity;
+import com.wapchief.timdemo.ui.activity.UserEditActivity;
+import com.wapchief.timdemo.ui.views.CircleImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,7 +43,12 @@ public class SettingFragment extends Fragment {
     private static String TAG = "SettingFragment";
     @BindView(R.id.setting_logout)
     Button mSettingLogout;
+    @BindView(R.id.setting_me)
+    LinearLayout mSettingMe;
+    @BindView(R.id.setting_avatar)
+    CircleImageView mSettingAvatar;
     private SharedPrefHelper mPrefHelper;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -63,6 +72,11 @@ public class SettingFragment extends Fragment {
                     public void onSuccess(TIMUserProfile timUserProfile) {
                         mSettingName.setText(timUserProfile.getNickName());
                         mIdtext.setText(timUserProfile.getIdentifier());
+                        Log.e(TAG, "avatar:" + timUserProfile.getFaceUrl());
+                        Picasso.with(getActivity())
+                                .load(timUserProfile.getFaceUrl())
+                                .placeholder(R.drawable.head_me)
+                                .into(mSettingAvatar);
                     }
                 });
     }
@@ -73,10 +87,13 @@ public class SettingFragment extends Fragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.setting_name, R.id.setting_logout})
+    @OnClick({R.id.setting_name, R.id.setting_logout, R.id.setting_me})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.setting_name:
+                break;
+            case R.id.setting_me:
+                startActivity(new Intent(getActivity(), UserEditActivity.class));
                 break;
             case R.id.setting_logout:
                 mSettingLogout.setText("正在退出....");

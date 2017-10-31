@@ -31,8 +31,6 @@ import com.wapchief.timdemo.ui.adapter.ConversionListAdapter;
 import com.wapchief.timdemo.ui.entity.TIMConverstionBean;
 import com.wapchief.timdemo.utils.TimeUtils;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,7 +67,7 @@ public class HomeFragment extends Fragment implements TIMMessageListener {
 
     private void initView() {
 //        mMessageExt = new TIMMessageExt(new TIMMessage());
-
+        TIMManager.getInstance().addMessageListener(this);
         initAdapter();
         initRefresh();
     }
@@ -120,6 +118,7 @@ public class HomeFragment extends Fragment implements TIMMessageListener {
             mBean.type = 0;
             mBean.sum = getMsgNum(list.get(i).getType(), list.get(i).getPeer());
             mBean.time = getLastTime(list.get(i).getType(), list.get(i).getPeer());
+            mBean.img = "";
             switch (list.get(i).getType()) {
                 case C2C:
                     mBean.userName = getUserName(list.get(i).getType(), list.get(i).getPeer());
@@ -173,7 +172,6 @@ public class HomeFragment extends Fragment implements TIMMessageListener {
 
         }
     }
-
     /*获取对方资料*/
     private String getUserName(TIMConversationType type, String peer) {
         //得到会话
@@ -182,7 +180,6 @@ public class HomeFragment extends Fragment implements TIMMessageListener {
         TIMConversationExt ext = new TIMConversationExt(conversation);
         //拿到最后一条
         TIMMessage message = ext.getLastMsgs(1).get(0);
-
         return message.getSender();
     }
 
@@ -203,10 +200,6 @@ public class HomeFragment extends Fragment implements TIMMessageListener {
         TIMConversationExt ext = new TIMConversationExt(conversation);
         //拿到最后一条
         TIMMessage message = ext.getLastMsgs(1).get(0);
-        DateFormat format = new SimpleDateFormat("MM-dd HH:mm");
-//        Log.e(TAG, "time:" + message.timestamp()+"\n"+
-//                com.wapchief.timdemo.utils.TimeUtils.TimeStamp2Date(message.timestamp()+"","MM-dd HH:mm"));
-
         return TimeUtils.TimeStamp2Date(message.timestamp() + "", "MM-dd HH:mm");
 
     }
@@ -219,7 +212,8 @@ public class HomeFragment extends Fragment implements TIMMessageListener {
 
     @Override
     public boolean onNewMessages(List<TIMMessage> list) {
-        Log.e(TAG,"新消息："+ list.size());
+        mConverstionBean.clear();
+        initData();
         return false;
     }
 

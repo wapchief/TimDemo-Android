@@ -41,7 +41,7 @@ public class FriendsFragment extends Fragment {
     SmartRefreshLayout mFriendsRefresh;
     private ConversionListAdapter mAdapter;
     List<TIMConverstionBean> mBeans = new ArrayList<>();
-
+    private static String TAG = "FriendsFragment";
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -91,7 +91,6 @@ public class FriendsFragment extends Fragment {
 
             @Override
             public void onSuccess(List<TIMUserProfile> timUserProfiles) {
-                Log.e("onSuccess:", timUserProfiles.size() + "\n");
                 TIMConverstionBean mBean;
                 for (int i = 0; i < timUserProfiles.size(); i++) {
                     mBean = new TIMConverstionBean();
@@ -128,6 +127,7 @@ public class FriendsFragment extends Fragment {
                     mBeans.add(mBean);
 //                    mBean.content = timUserProfiles.get(i).getGender().getValue();
                 }
+                Log.e(TAG, "mBeans:"+mBeans);
                 mAdapter.notifyDataSetChanged();
 
             }

@@ -39,6 +39,8 @@ import com.wapchief.timdemo.R;
 import com.wapchief.timdemo.framework.sp.SharedPrefHelper;
 import com.wapchief.timdemo.ui.activity.LoginActivity;
 
+import org.xutils.x;
+
 import java.util.List;
 
 
@@ -62,13 +64,14 @@ public class BaseApplication extends Application {
         super.onCreate();
         baseApplication = this;
         Utils.init(this);
+        x.Ext.init(this);
 //        initTIM();
 //        this.registerActivityLifecycleCallbacks();
-        if(MsfSdkUtils.isMainProcess(this)) {
+        if (MsfSdkUtils.isMainProcess(this)) {
             TIMManager.getInstance().setOfflinePushListener(new TIMOfflinePushListener() {
                 @Override
                 public void handleNotification(TIMOfflinePushNotification notification) {
-                    if (notification.getGroupReceiveMsgOpt() == TIMGroupReceiveMessageOpt.ReceiveAndNotify){
+                    if (notification.getGroupReceiveMsgOpt() == TIMGroupReceiveMessageOpt.ReceiveAndNotify) {
                         //消息被设置为需要提醒
                         notification.doNotify(getApplicationContext(), R.mipmap.ic_launcher);
                     }
@@ -77,7 +80,8 @@ public class BaseApplication extends Application {
         }
 
 
-}
+    }
+
 
     /*初始化通讯*/
     private void initTIM() {
@@ -186,14 +190,14 @@ public class BaseApplication extends Application {
         @Override
         public void onDisconnected(int i, String s) {
             ToastUtils.showShort(s);
-            Log.e(TAG, "onDisconnected："+s);
+            Log.e(TAG, "onDisconnected：" + s);
 
         }
 
         @Override
         public void onWifiNeedAuth(String s) {
             ToastUtils.showShort(s);
-            Log.e(TAG, "onWifiNeedAuth："+s);
+            Log.e(TAG, "onWifiNeedAuth：" + s);
 
 
         }
@@ -221,7 +225,7 @@ public class BaseApplication extends Application {
 
         @Override
         public void onRefreshConversation(List<TIMConversation> list) {
-            Log.e(TAG, "onRefreshConversation："+list.size());
+            Log.e(TAG, "onRefreshConversation：" + list.size());
 
         }
     };

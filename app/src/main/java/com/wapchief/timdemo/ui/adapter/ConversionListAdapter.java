@@ -2,12 +2,14 @@ package com.wapchief.timdemo.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.view.View;
 
-import com.blankj.utilcode.util.ImageUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.tencent.imsdk.TIMConversationType;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.wapchief.timdemo.R;
 import com.wapchief.timdemo.ui.ChatActivity;
 import com.wapchief.timdemo.ui.activity.ChatGroupActivity;
@@ -16,6 +18,8 @@ import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
 import java.util.List;
+
+
 
 /**
  * 会话列表
@@ -36,12 +40,19 @@ public class ConversionListAdapter extends CommonAdapter<TIMConverstionBean>{
     }
 
     @Override
-    protected void convert(ViewHolder holder, final TIMConverstionBean o, int position) {
+    protected void convert(final ViewHolder holder, final TIMConverstionBean o, int position) {
         holder.setText(R.id.item_main_username, o.userName);
         holder.setText(R.id.item_main_content, o.content);
         holder.setText(R.id.item_main_time, o.time);
+        String imgUrl="http://oyo2uh6cg.bkt.clouddn.com/head_other.png?e=1509441987&token=Krhu0H-zzbB3CAyvYjavLd-YpOFj1o8bnQehctw2:uTuFupwPo64YuPMnFOemLBxa3PM";
+        if (!StringUtils.isEmpty(o.img)){
+            imgUrl = o.img;
+        }
         /*会话列表*/
+        Glide.with(mContext)
+                .resumeRequests();
         if (type==0) {
+
             /*未读消息*/
             sum = o.sum;
             if (sum>0) {
@@ -54,16 +65,33 @@ public class ConversionListAdapter extends CommonAdapter<TIMConverstionBean>{
             holder.setVisible(R.id.item_main_time, true);
             holder.setText(R.id.item_main_time, o.time);
 
-            /*头像*/
-            if (!StringUtils.isEmpty(o.img)) {
-                holder.setImageBitmap(R.id.item_main_img, ImageUtils.getBitmap(o.img));
-            } else {
-                if (o.conType == TIMConversationType.C2C) {
+            switch (o.conType){
+                case C2C:
 
-                    holder.setImageResource(R.id.item_main_img, R.drawable.head_other);
-                } else {
+                        Glide.with(mContext)
+                                .load(imgUrl)
+                                .asBitmap()
+                                .into(new SimpleTarget<Bitmap>() {
+                                    @Override
+                                    public void onResourceReady(Bitmap bitmap, GlideAnimation<? super Bitmap> glideAnimation) {
+                                        holder.setImageBitmap(R.id.item_main_img, bitmap);
+
+                                    }
+                                });
+
+                    break;
+                case System:
                     holder.setImageResource(R.id.item_main_img, R.drawable.ic_news);
-                }
+                    break;
+                case Group:
+                    holder.setImageResource(R.id.item_main_img, R.drawable.head_group);
+                    break;
+                case Invalid:
+                    holder.setImageResource(R.id.item_main_img, R.drawable.head_discussion_group);
+                    break;
+                default:
+                    break;
+
             }
             holder.setOnClickListener(R.id.item_main, new View.OnClickListener() {
                 @Override
@@ -94,8 +122,23 @@ public class ConversionListAdapter extends CommonAdapter<TIMConverstionBean>{
         /*好友列表*/
         if (type == 1) {
             if (!StringUtils.isEmpty(o.img)) {
-                holder.setImageBitmap(R.id.item_main_img, ImageUtils.getBitmap(o.img));
+//                holder.setImageBitmap(R.id.item_main_img, ImageUtils.returnBitMap(o.img));
+                Glide.with(mContext)
+                        .load(o.img)
+                        .asBitmap()
+                        .into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(Bitmap bitmap, GlideAnimation<? super Bitmap> glideAnimation) {
+                                holder.setImageBitmap(R.id.item_main_img, bitmap);
+
+                            }
+                        });
+
+            }else {
+                holder.setImageResource(R.id.item_main_img, R.drawable.head_other);
+
             }
         }
+
     }
 }

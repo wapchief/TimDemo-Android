@@ -5,12 +5,15 @@
 
 
     <LinearLayout
+        android:id="@+id/setting_me"
         android:layout_width="match_parent"
         android:layout_height="56dp"
+        android:layout_marginTop="50dp"
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal">
         <com.wapchief.timdemo.ui.views.CircleImageView
+            android:id="@+id/setting_avatar"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_marginLeft="20dp"
