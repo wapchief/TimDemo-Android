@@ -51,8 +51,9 @@ public class ConversionListAdapter extends CommonAdapter<TIMConverstionBean>{
         /*会话列表*/
         Glide.with(mContext)
                 .resumeRequests();
+//        Log.e("adapter", imgUrl+"\n"+o.img);
         if (type==0) {
-
+//            Log.e("adapter2", imgUrl+"\n"+o.img);
             /*未读消息*/
             sum = o.sum;
             if (sum>0) {
@@ -121,6 +122,7 @@ public class ConversionListAdapter extends CommonAdapter<TIMConverstionBean>{
         }
         /*好友列表*/
         if (type == 1) {
+//            Log.e("adapter3", imgUrl+"\n"+o.img);
             if (!StringUtils.isEmpty(o.img)) {
 //                holder.setImageBitmap(R.id.item_main_img, ImageUtils.returnBitMap(o.img));
                 Glide.with(mContext)

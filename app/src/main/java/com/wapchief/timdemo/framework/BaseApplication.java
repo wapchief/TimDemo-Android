@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Environment;
+import android.support.multidex.MultiDex;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
@@ -65,6 +66,7 @@ public class BaseApplication extends Application {
         baseApplication = this;
         Utils.init(this);
         x.Ext.init(this);
+
 //        initTIM();
 //        this.registerActivityLifecycleCallbacks();
         if (MsfSdkUtils.isMainProcess(this)) {
@@ -80,6 +82,11 @@ public class BaseApplication extends Application {
         }
 
 
+    }
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 
 
